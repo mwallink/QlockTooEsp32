@@ -123,6 +123,31 @@ void Webinterface::begin() {
 
                 request->send(200, "application/json", "{ \"status\": \"success\" }");
             }
+
+            if ((request->url() == "/api/leds") &&
+                (request->method() == HTTP_POST)) {
+                StaticJsonDocument<512> jsonDoc;
+
+                if (DeserializationError::Ok == deserializeJson(jsonDoc, (const char *)data)) {
+                    uint8_t leds, dur1, dur2, dur3, dur4;
+                    auto config = jsonDoc["config"];
+                    leds = config["leds"] | 10;
+                    dur1 = config["dur1"] | 10;
+                    dur2 = config["dur2"] | 10;
+                    dur3 = config["dur3"] | 10;
+                    dur4 = config["dur4"] | 10;
+
+                    debugI("durations: %u, %u, %u, %u", dur1, dur2, dur3, dur4);
+                    Display::setConfig(110, dur1, dur2, dur3, dur4);
+                    Display::clear();
+                    Display::show();
+                    Display::setConfig(leds, dur1, dur2, dur3, dur4);
+
+                }
+
+                request->send(200, "application/json", "{ \"status\": \"success\" }");
+            }
+
         });
 
     server.onNotFound([&](AsyncWebServerRequest *request) {

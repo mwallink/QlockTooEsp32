@@ -41,7 +41,7 @@ class sk {
         skconfig.tx_config.idle_output_en = 1;
         skconfig.tx_config.idle_level = RMT_IDLE_LEVEL_LOW;
         skconfig.tx_config.carrier_level = RMT_CARRIER_LEVEL_HIGH;
-        skconfig.clk_div = 8;  // 80MHx / 8 = 10MHz translates to  0,1 us = 100 ns per count
+        skconfig.clk_div = 4;  // 80MHx / 8 = 10MHz translates to  0,1 us = 100 ns per count
 
         rmt_config(&skconfig);
         rc = rmt_driver_install(skconfig.channel, 0, 0);  //  rmt_driver_install(rmt_channel_t channel, size_t rx_buf_size, int rmt_intr_num)
@@ -103,28 +103,28 @@ class sk {
         b = bright * blue / 100;
         w = bright * white / 100;
 
-        //Serial.printf("_brightness = %d, brightness %d, bright %d\n", _brightness, brightness, bright);
-        //Serial.printf( "rgbw = %d.%d.%d.%d\n---\n", r,g,b,w);
+        Serial.printf("_brightness = %d, brightness %d, bright %d\n", _brightness, brightness, bright);
+        Serial.printf( "rgbw = %d.%d.%d.%d\n---\n", r,g,b,w);
 
         kleur |= ((uint32_t)g << 24);
         kleur |= ((uint32_t)r << 16);
         kleur |= ((uint32_t)b << 8);
-        kleur |= (uint32_t)w;
+        kleur |= (uint32_t)r;
 
         //Serial.printf("Set color of led %d kleur %08X\n", led, kleur);
         // sk6812 has around 600us/600us 1, 300/900us 0
-
+        // Serial.printf("Durations: %u, %u, %u, %u\r\n", dur1, dur2, dur3, dur4);
         for (i = (led * 32), bit = 0; bit < 32; bit++) {
             if ((kleur & (1 << (31 - bit)))) {
                 _skstrip[i].level0 = 1;
-                _skstrip[i].duration0 = 6;
+                _skstrip[i].duration0 = dur1;
                 _skstrip[i].level1 = 0;
-                _skstrip[i].duration1 = 6;
+                _skstrip[i].duration1 = dur2;
             } else {
                 _skstrip[i].level0 = 1;
-                _skstrip[i].duration0 = 3;
+                _skstrip[i].duration0 = dur3;
                 _skstrip[i].level1 = 0;
-                _skstrip[i].duration1 = 9;
+                _skstrip[i].duration1 = dur4;
             }
             //if ( bit == 31 )  _skstrip[i].duration1 += 60;
             ++i;
@@ -138,7 +138,9 @@ class sk {
         // int rc;
         // esp_err_t rmt_write_items(rmt_channel_t channel, rmt_item32_t *rmt_item, int item_num, bool wait_tx_done)
 
-        rmt_write_items(skconfig.channel, _skstrip, _bitcount, 1);
+        // rmt_write_items(skconfig.channel, _skstrip, _bitcount, 1);
+        // rmt_write_items(skconfig.channel, _skstrip, leds * 32, 1);
+        rmt_write_items(skconfig.channel, _skstrip, leds * 24, 1);
 
         delay(2);
     }
@@ -276,6 +278,8 @@ class sk {
             }
         }
     }
+
+    volatile int leds, dur1, dur2, dur3, dur4;
 
    private:
     int _ledcount;
