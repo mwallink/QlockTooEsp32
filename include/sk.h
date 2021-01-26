@@ -81,9 +81,9 @@ class sk {
     }
 
     /*-------------------------------------------------------------------------*/
-    void color(int led, uint8_t red, uint8_t green, uint8_t blue, uint8_t white, int brightness = -1) {
-        uint32_t kleur = 0, bright;
-        uint8_t r = red, g = green, b = blue, w = white;
+    void color(int led, uint8_t r, uint8_t g, uint8_t b, uint8_t w, int brightness = -1) {
+        uint32_t kleur = 0; //, bright;
+        // uint8_t r = red, g = green, b = blue, w = white;
         int i, bit;
 
         if (led < 0 || led >= ledcount())
@@ -92,24 +92,24 @@ class sk {
         //Serial.printf( "---\nrgbw = %d.%d.%d.%d\n", red,green,blue,white);
         // brightness is a percentage 0...100
 
-        bright = brightness;
-        if (brightness == -1)
-            bright = 100;
+        // bright = brightness;
+        // if (brightness == -1)
+        //     bright = 100;
 
-        bright = (bright * _brightness) / 100;
+        // bright = (bright * _brightness) / 100;
 
-        r = bright * red / 100;
-        g = bright * green / 100;
-        b = bright * blue / 100;
-        w = bright * white / 100;
+        // r = bright * red / 100;
+        // g = bright * green / 100;
+        // b = bright * blue / 100;
+        // w = bright * white / 100;
 
-        Serial.printf("_brightness = %d, brightness %d, bright %d\n", _brightness, brightness, bright);
-        Serial.printf( "rgbw = %d.%d.%d.%d\n---\n", r,g,b,w);
+        // Serial.printf("_brightness = %d, brightness %d, bright %d\n", _brightness, brightness, bright);
+        Serial.printf( "led [%d] rgbw = %d, %d, %d, %d\n---\n", led, r,g,b,w);
 
         kleur |= ((uint32_t)g << 24);
         kleur |= ((uint32_t)r << 16);
         kleur |= ((uint32_t)b << 8);
-        kleur |= (uint32_t)r;
+        kleur |= (uint32_t)w;
 
         //Serial.printf("Set color of led %d kleur %08X\n", led, kleur);
         // sk6812 has around 600us/600us 1, 300/900us 0
@@ -140,7 +140,7 @@ class sk {
 
         // rmt_write_items(skconfig.channel, _skstrip, _bitcount, 1);
         // rmt_write_items(skconfig.channel, _skstrip, leds * 32, 1);
-        rmt_write_items(skconfig.channel, _skstrip, leds * 24, 1);
+        rmt_write_items(skconfig.channel, _skstrip, _ledcount * 24, 1);
 
         delay(2);
     }
@@ -279,10 +279,10 @@ class sk {
         }
     }
 
-    volatile int leds, dur1, dur2, dur3, dur4;
+    volatile int _ledcount, dur1, dur2, dur3, dur4;
 
    private:
-    int _ledcount;
+    
     int _bitcount;
     int _ledpin;
     int _brightness;

@@ -66,7 +66,17 @@ void Clock::applyConfig(ClockConfig &config) {
 
     Display::clear();
 
-    setColor(ledsbyword[HETIS], config.colorItIs);
+    // setColor(ledsbyword[HETIS], config.colorItIs);
+
+    uint8_t brigthness = 255;
+    uint32_t color1 = config.colorItIs.getColor();
+    uint32_t color2 = config.colorWords.getColor();
+    uint32_t color3 = config.colorHour.getColor();
+
+    Display::drawPixelRaw(0, color1, brigthness);
+    Display::drawPixelRaw(1, color2, brigthness);
+    Display::drawPixelRaw(2, color3, brigthness);
+    
 
 }
 

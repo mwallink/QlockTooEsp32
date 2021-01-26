@@ -27,7 +27,7 @@ class Display {
     static void drawPixelRaw(int16_t index, uint32_t c, uint8_t brightness) { realDisplay.color32(index, c, brightness); };
     static void drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint16_t color) { realDisplay.writeLine(x0, y0, x1, y1, color); };
 
-    static void setConfig(uint8_t leds, uint8_t dur1, uint8_t dur2, uint8_t dur3, uint8_t dur4) { realDisplay.leds = leds; realDisplay.dur1 = dur1; realDisplay.dur2 = dur2; realDisplay.dur3 = dur3; realDisplay.dur4 = dur4;  };
+    static void setConfig(uint8_t leds, uint8_t dur1, uint8_t dur2, uint8_t dur3, uint8_t dur4) { realDisplay._ledcount = leds; realDisplay.dur1 = dur1; realDisplay.dur2 = dur2; realDisplay.dur3 = dur3; realDisplay.dur4 = dur4;  };
 
     // Helper methods
     static uint32_t ColorHSV(uint16_t hue, uint8_t sat, uint8_t val) {
