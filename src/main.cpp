@@ -42,6 +42,7 @@
 using namespace qlocktoo;
 using namespace std;
 
+uint8_t red = 0, green = 0, blue = 0;
 const char* build_str = "Version: " VERSION " " __DATE__ " " __TIME__;
 const uint8_t   timeZone        = 1;     // Central European Time
 int8_t minutesTimeZone = 0;
@@ -137,6 +138,11 @@ void setupOTA() {
     });
 
   ArduinoOTA.begin();
+}
+
+void setupDisplay() {
+  Display::begin();
+  // Display::clear();
 }
 
 void processCmdRemoteDebug() {
@@ -269,6 +275,8 @@ void setup() {
   setupOTA();
   Serial.println("setup Logging");
   setupLogging();
+  Serial.println("setup LED Display");
+  setupDisplay();
   Serial.println("setup NTP");
   setupNTP();
   Serial.println("setup Webinterface");
@@ -291,6 +299,10 @@ void loop() {
   // Debug.handle();
   // delay(300);
   delay(300);
+
+  // Display::drawPixelRaw(1, RgbColor(red+=10, green+=2, blue+=10));
+  // Display::show();
+
   Mode newMode;
   // uint8_t newMode;
   if (xQueueReceive(xChangeAppQueue, &newMode, pdMS_TO_TICKS(300)) == pdTRUE) {

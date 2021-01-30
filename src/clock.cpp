@@ -53,8 +53,8 @@ void Clock::setup() {
     config.colorHour = RGBW(255, 0, 0);
     applyConfig(config);
 
-    Display::begin();
-    Display::clear();
+    // Display::begin();
+    // Display::clear();
     // TODO: verplaatsen naar main
     // const long  gmtOffset_sec = 3600;
     // const int   daylightOffset_sec = 3600;
@@ -69,14 +69,16 @@ void Clock::applyConfig(ClockConfig &config) {
     // setColor(ledsbyword[HETIS], config.colorItIs);
 
     uint8_t brigthness = 255;
-    uint32_t color1 = config.colorItIs.getColor();
-    uint32_t color2 = config.colorWords.getColor();
-    uint32_t color3 = config.colorHour.getColor();
+    RgbwColor color1 = config.colorItIs.getTestColor();
+    RgbwColor color2 = config.colorWords.getTestColor();
+    RgbwColor color3 = config.colorHour.getTestColor();
 
-    Display::drawPixelRaw(0, color1, brigthness);
-    Display::drawPixelRaw(1, color2, brigthness);
-    Display::drawPixelRaw(2, color3, brigthness);
-    
+
+
+    Display::drawPixelRaw(0, color1);
+    Display::drawPixelRaw(1, color2);
+    Display::drawPixelRaw(2, color3);
+    Display::show();
 
 }
 
@@ -111,7 +113,7 @@ void Clock::loop() {
     if (next_hourword == 0) next_hourword = 12;                  // 0 is also called 12
 
 
-    Display::show();
+    // Display::show();
     delay(100);
 }
 
@@ -140,7 +142,7 @@ void Clock::setColor(const std::vector<int> ddd, RGBW rgbw) {
     uint32_t color = rgbw.getColor();
 
     for (uint8_t led = 0; led <= 110; led++) {
-        Display::drawPixelRaw(led, color, brigthness);
+        //Display::drawPixelRaw(led, color, brigthness);
     }
 }
 

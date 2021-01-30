@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Arduino.h>
+#include <NeoPixelBus.h>
 
 namespace qlocktoo {
 class RGBW {
@@ -33,6 +34,11 @@ class RGBW {
 
         return color;
     };
+
+    RgbwColor getTestColor() {
+        return RgbwColor(r, g, b, w);
+    }
+
 
     // Returns the Red component of a 32-bit color
     // uint8_t Red(uint32_t color)
