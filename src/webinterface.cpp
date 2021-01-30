@@ -87,7 +87,7 @@ void Webinterface::begin() {
 
                     // TODO: iets met kleurtjes
                     Mode newMode = Mode::CLOCK;
-                    xQueueSend(xChangeAppQueue, &newMode, 0);
+                    // xQueueSend(xChangeAppQueue, &newMode, 0);
                     xQueueSend(xClockConfigQueue, &config, 0);
                 }
 

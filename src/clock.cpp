@@ -61,24 +61,24 @@ void Clock::setup() {
     // configTime(gmtOffset_sec, daylightOffset_sec, ntpServer);
 }
 
-void Clock::applyConfig(ClockConfig &config) {
+void Clock::applyConfig(ClockConfig config) {
     this->config = config;
 
-    Display::clear();
+    // Display::clear();
 
     // setColor(ledsbyword[HETIS], config.colorItIs);
 
-    uint8_t brigthness = 255;
-    RgbwColor color1 = config.colorItIs.getTestColor();
-    RgbwColor color2 = config.colorWords.getTestColor();
-    RgbwColor color3 = config.colorHour.getTestColor();
+    // uint8_t brigthness = 255;
+    // RgbwColor color1 = config.colorItIs.getTestColor();
+    // RgbwColor color2 = config.colorWords.getTestColor();
+    // RgbwColor color3 = config.colorHour.getTestColor();
 
 
 
-    Display::drawPixelRaw(0, color1);
-    Display::drawPixelRaw(1, color2);
-    Display::drawPixelRaw(2, color3);
-    Display::show();
+    // Display::drawPixelRaw(0, color1);
+    // Display::drawPixelRaw(1, color2);
+    // Display::drawPixelRaw(2, color3);
+    // Display::show();
 
 }
 
@@ -113,8 +113,78 @@ void Clock::loop() {
     if (next_hourword == 0) next_hourword = 12;                  // 0 is also called 12
 
 
-    // Display::show();
-    delay(100);
+    Display::clear();
+
+    setColor(ledsbyword[HETIS], config.colorItIs);
+    switch ((minute % 60) / 5) {
+        case 0:
+            setColor(ledsbyword[current_hourword], config.colorHour);
+            setColor(ledsbyword[UUR], config.colorWords);
+            break;
+        case 1:
+            setColor(ledsbyword[VIJF], config.colorWords);
+            setColor(ledsbyword[OVER1], config.colorWords);
+            setColor(ledsbyword[current_hourword], config.colorHour);
+            break;
+        case 2:
+            setColor(ledsbyword[TIEN], config.colorWords);
+            setColor(ledsbyword[OVER2], config.colorWords);
+            setColor(ledsbyword[current_hourword], config.colorHour);
+            break;
+        case 3:
+            setColor(ledsbyword[KWART], config.colorWords);
+            setColor(ledsbyword[OVER2], config.colorWords);
+            setColor(ledsbyword[current_hourword], config.colorHour);
+            break;
+        case 4:
+            setColor(ledsbyword[TIEN], config.colorWords);
+            setColor(ledsbyword[VOOR1], config.colorWords);
+            setColor(ledsbyword[HALF], config.colorWords);
+            setColor(ledsbyword[next_hourword], config.colorHour);
+            break;
+        case 5:
+            setColor(ledsbyword[VIJF], config.colorWords);
+            setColor(ledsbyword[VOOR1], config.colorWords);
+            setColor(ledsbyword[HALF], config.colorWords);
+            setColor(ledsbyword[next_hourword], config.colorHour);
+            break;
+        case 6:
+            setColor(ledsbyword[HALF], config.colorWords);
+            setColor(ledsbyword[next_hourword], config.colorHour);
+            break;
+        case 7:
+            setColor(ledsbyword[VIJF], config.colorWords);
+            setColor(ledsbyword[OVER1], config.colorWords);
+            setColor(ledsbyword[HALF], config.colorWords);
+            setColor(ledsbyword[next_hourword], config.colorHour);
+            break;
+        case 8:
+            setColor(ledsbyword[TIEN], config.colorWords);
+            setColor(ledsbyword[OVER1], config.colorWords);
+            setColor(ledsbyword[HALF], config.colorWords);
+            setColor(ledsbyword[next_hourword], config.colorHour);
+            break;
+        case 9:
+            setColor(ledsbyword[KWART], config.colorWords);
+            setColor(ledsbyword[VOOR2], config.colorWords);
+            setColor(ledsbyword[next_hourword], config.colorHour);
+            break;
+        case 10:
+            setColor(ledsbyword[TIEN], config.colorWords);
+            setColor(ledsbyword[VOOR1], config.colorWords);
+            setColor(ledsbyword[next_hourword], config.colorHour);
+            break;
+        case 11:
+            setColor(ledsbyword[VIJF], config.colorWords);
+            setColor(ledsbyword[VOOR2], config.colorWords);
+            setColor(ledsbyword[next_hourword], config.colorHour);
+            break;
+    }
+
+    Display::show();
+    RgbwColor ddd = config.colorItIs.getTestColor();
+    debugD("color it is: %u, %u, %u", ddd.R, ddd.G, ddd.B);
+    delay(1000);
 }
 
 uint8_t Clock::timeBrightness() {
@@ -137,12 +207,12 @@ uint8_t Clock::timeBrightness() {
     return 0;
 }
 
-void Clock::setColor(const std::vector<int> ddd, RGBW rgbw) {
-    uint8_t brigthness = 255;
-    uint32_t color = rgbw.getColor();
+void Clock::setColor(const std::vector<int> leds, RGBW rgbw) {
+    uint8_t brigthness = timeBrightness();
+    RgbwColor color = rgbw.getTestColor();
 
-    for (uint8_t led = 0; led <= 110; led++) {
-        //Display::drawPixelRaw(led, color, brigthness);
+    for (uint8_t led : leds) {
+        Display::drawPixelRaw(led, color);
     }
 }
 

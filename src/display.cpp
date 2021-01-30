@@ -20,7 +20,7 @@ namespace qlocktoo {
     }
 
 
-    NeoPixelBus<NeoGrbwFeature, NeoSk6812Method> Display::realDisplay(3, LEDSTRIP_PIN);
+    NeoPixelBus<NeoGrbwFeature, NeoSk6812Method> Display::realDisplay(110, LEDSTRIP_PIN);
     bool Display::initialized = false;
 
     void Display::begin() {
