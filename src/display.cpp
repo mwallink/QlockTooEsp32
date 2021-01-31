@@ -25,7 +25,7 @@ namespace qlocktoo {
 
     void Display::begin() {
         if (!initialized) {
-            RgbColor dark(255, 255, 0);
+            RgbColor dark(2, 2, 0);
             realDisplay.Begin();
             // realDisplay.SetBrightness(255);
             realDisplay.ClearTo(dark);
