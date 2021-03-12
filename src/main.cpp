@@ -34,7 +34,6 @@
 #include "animation.h"
 
 #include <SPIFFS.h>
-#include "wifipassword.h"
 
 
 #define NTP_TIMEOUT 1500
@@ -71,7 +70,7 @@ void setupWifi() {
   debugI("Connecting to Wifi...");
   Serial.println("Connecting to Wifi...");
   WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
+  WiFi.begin("SKULLFORT", "schattigebabyeendjes.jpg!");
 
   while (WiFi.waitForConnectResult() != WL_CONNECTED) {
     debugE("Connection Failed! Rebooting...");
