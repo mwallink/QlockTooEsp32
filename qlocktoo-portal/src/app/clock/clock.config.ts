@@ -9,6 +9,7 @@ export interface ClockConfig {
   colorItIs: IroColorValue.Color,
   colorWords: IroColorValue.Color,
   colorHour: IroColorValue.Color,
+  colorMinutes: IroColorValue.Color,
   clockMode?: ClockMode
   minutesEnabled?: boolean
 }

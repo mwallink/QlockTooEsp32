@@ -17,9 +17,10 @@ export class ClockService extends ApiService {
   public getConfig(): ClockConfig {
     console.info('get config from Qlock');
     return {
-      colorItIs: new IroColorValue.Color('#ff00ff'),
-      colorWords: new IroColorValue.Color('#9addaf'),
-      colorHour: new IroColorValue.Color('#00dddd')
+      colorItIs: new IroColorValue.Color('#ffffff'),
+      colorWords: new IroColorValue.Color('#ffffff'),
+      colorHour: new IroColorValue.Color('#ffffff'),
+      colorMinutes: new IroColorValue.Color('#ffffff')
     }
 
     // return this.get('clock', {}).;

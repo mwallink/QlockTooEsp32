@@ -31,6 +31,15 @@
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
+        Hoek minuten
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-colorpicker [(color)]=config.colorMinutes (colorChanged)=onColorChanged()></app-colorpicker>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
         Opties
       </mat-panel-title>
     </mat-expansion-panel-header>

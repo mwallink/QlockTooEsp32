@@ -26,7 +26,10 @@ Webinterface::Webinterface(int port, RemoteDebug &debug_) : Debug(debug_), serve
     // debugI
 }
 
-void Webinterface::begin() {
+void Webinterface::begin() 
+{
+    //Preferences preferences;
+
     server.serveStatic("/", SPIFFS, "/qlocktoo-portal").setDefaultFile("index.html");
     // server.on("/", HTTP_GET, [&](AsyncWebServerRequest *request){
     //     debugI("GET received :)");
@@ -82,6 +85,13 @@ void Webinterface::begin() {
                     s = color["s"] | 0.0f;
                     v = color["v"] | 0.0f;
                     config.colorHour = HsbColor(h, s, v);
+                    // Serial.printf("RGBW hour: %u, %u, %u, %u\r\n", r, g, b, w);
+
+                    color = jsonDoc["colorMinutes"];
+                    h = color["h"] | 0.0f;
+                    s = color["s"] | 0.0f;
+                    v = color["v"] | 0.0f;
+                    config.colorMinutes = HsbColor(h, s, v);
                     // Serial.printf("RGBW hour: %u, %u, %u, %u\r\n", r, g, b, w);
 
                     // TODO: iets met kleurtjes
@@ -149,6 +159,12 @@ void Webinterface::begin() {
                 }
 
                 request->send(200, "application/json", "{ \"status\": \"success\" }");
+            }
+
+            if ((request->url() == "/api/reboot") &&
+                (request->method() == HTTP_GET)) 
+            {
+                ESP.restart();
             }
 
         });

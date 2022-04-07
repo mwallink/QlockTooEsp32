@@ -34,18 +34,26 @@
 #define VOOR2 20
 #define OVER2 21
 
+#define MIN1 22
+#define MIN2 23
+#define MIN3 24
+#define MIN4 25
+
 #define PIEK 0
 #define BOOM 1
 #define STAM 2
+
+
 
 namespace qlocktoo {
 void Clock::setup() {
     debugI("Clock setup");
 
     ClockConfig config;
-    config.colorItIs = RgbwColor(0, 0, 255, 0);
-    config.colorWords = RgbwColor(0, 200, 0, 0);
-    config.colorHour = RgbwColor(255, 0, 0, 0);
+    config.colorItIs = RgbwColor(0, 0, 0, 40);
+    config.colorWords = RgbwColor(0, 0, 0, 40);
+    config.colorHour = RgbwColor(0, 0, 0, 40);
+    config.colorMinutes = RgbwColor(0, 0, 0, 40);
     applyConfig(config);
 
     Display::begin();
@@ -93,6 +101,8 @@ void Clock::loop() {
     Display::clear();
 
     setColor(ledsbyword[HETIS], config.colorItIs);
+    debugI("minuut:");
+    Serial.printf("minuut: %u\r\n", minute);
     switch ((minute % 60) / 5) {
         case 0:
             setColor(ledsbyword[current_hourword], config.colorHour);
@@ -155,6 +165,25 @@ void Clock::loop() {
             setColor(ledsbyword[VIJF], config.colorWords);
             setColor(ledsbyword[VOOR2], config.colorWords);
             setColor(ledsbyword[next_hourword], config.colorHour);
+            break;
+    }
+
+    switch (minute % 5) {
+        case 1:
+            Serial.printf("set minuut: %u\r\n", 1);
+            setColor(ledsbyword[MIN1], config.colorMinutes);
+            break;
+        case 2:
+            Serial.printf("set minuut: %u\r\n", 2);
+            setColor(ledsbyword[MIN2], config.colorMinutes);
+            break;
+        case 3:            
+            Serial.printf("set minuut: %u\r\n", 3);
+            setColor(ledsbyword[MIN3], config.colorMinutes);
+            break;
+        case 4:            
+            Serial.printf("set minuut: %u\r\n", 4);
+            setColor(ledsbyword[MIN4], config.colorMinutes);
             break;
     }
 
