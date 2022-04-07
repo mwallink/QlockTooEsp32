@@ -12,6 +12,7 @@ typedef struct {
     NeoGrbwFeature::ColorObject colorItIs;
     NeoGrbwFeature::ColorObject colorWords;
     NeoGrbwFeature::ColorObject colorHour;
+    NeoGrbwFeature::ColorObject colorMinutes;
 } ClockConfig;
 
 class Clock : public App {
@@ -28,28 +29,32 @@ class Clock : public App {
     void setColor(const std::vector<int> leds, NeoGrbwFeature::ColorObject color);
     void handleConfigQueue();
     const std::vector<std::vector<int>> ledsbyword = {
-        {0, 37, 38, 36, 39},        // HET IS
-        {17, 19, 54},               // een
-        {58, 89, 95, 57},           // twee
-        {91, 93, 55, 92},           // drie
-        {96, 88, 59, 97},           // vier
-        {87, 60, 98, 86},           // vijf
-        {61, 99, 85},               // zes
-        {102, 65, 82, 101, 64},     // zeven
-        {80, 66, 103, 79},          // acht
-        {100, 63, 84, 107, 62},     // negen
-        {67, 109, 78, 68},          // tien
-        {108, 77, 69},              // elf
-        {73, 81, 72, 74, 104, 71},  // twaalf
-        {35, 40, 3, 34},            // VIJF
-        {30, 43, 6, 31},            // TIEN
-        {9, 46, 27, 10, 47},        // KWART
-        {41, 4, 33, 26},            // VOOR1
-        {7, 44, 29, 8},             // OVER1
-        {22, 14, 50, 23},           // HALF
-        {70, 76, 106},              // UUR
-        {51, 15, 21, 52},           // VOOR2
-        {12, 48, 25, 11}            // OVER2
+        {10, 9, 8, 6, 5},        // HET IS
+        {45, 46, 47},               // een
+        {62, 63, 64, 65},           // twee
+        {55, 56, 57, 58},           // drie
+        {73, 74, 75, 76},           // vier
+        {69, 70, 71, 72},           // vijf
+        {66, 67, 68},               // zes
+        {83, 84, 85, 86, 87},     // zeven
+        {95, 96, 97, 98},          // acht
+        {77, 78, 79, 80, 81},     // negen
+        {91, 92, 93, 94},          // tien
+        {88, 89, 90},              // elf
+        {104, 105, 106, 107, 108, 109},  // twaalf
+        {0, 1, 2, 3},            // VIJF
+        {18, 19, 20, 21},            // TIEN
+        {22, 23, 24, 25, 26},        // KWART
+         {11, 12, 13, 14},           // VOOR1
+        {29, 30, 31, 32},             // OVER1
+        {40, 41, 42, 43},           // HALF
+        {99, 100, 101},              // UUR
+        {51, 52, 53, 54},          // VOOR2
+        {33, 34, 35, 36},            // OVER2
+        {112},                      // MIN1
+        {112, 111},                 // MIN2
+        {112, 111, 110},            // MIN3
+        {112, 111, 110, 113}        // MIN4
     };
 
    public:
