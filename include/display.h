@@ -7,7 +7,7 @@ namespace qlocktoo {
 
 class Display {
    private:
-    const static uint8_t LEDSTRIP_PIN = 13;
+    const static uint8_t LEDSTRIP_PIN = 25;
     static bool initialized;
     static NeoPixelBus<NeoGrbwFeature, NeoSk6812Method> realDisplay;
 

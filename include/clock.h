@@ -17,7 +17,7 @@ typedef struct {
 
 class Clock : public App {
    private:
-    const static uint8_t MIN_BRIGHTNESS = 15;
+    const static uint8_t MIN_BRIGHTNESS = 70;
     const static uint8_t MAX_BRIGHTNESS = 140;
     const static uint8_t dayHour = 8;     // Start increasing brightness
     const static uint8_t nightHour = 17;  // Start decreasing brightness
@@ -51,9 +51,9 @@ class Clock : public App {
         {99, 100, 101},              // UUR
         {51, 52, 53, 54},          // VOOR2
         {33, 34, 35, 36},            // OVER2
-        {112},                      // MIN1
-        {112, 111},                 // MIN2
-        {112, 111, 110},            // MIN3
+        {113},                      // MIN1
+        {112, 113},                 // MIN2
+        {112, 111, 113},            // MIN3
         {112, 111, 110, 113}        // MIN4
     };
 
