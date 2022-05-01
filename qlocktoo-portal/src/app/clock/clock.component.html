@@ -4,6 +4,15 @@
   <mat-expansion-panel>
     <mat-expansion-panel-header>
       <mat-panel-title>
+        Alles
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-colorpicker [(color)]=colorAll (colorChanged)=onColorAllChanged()></app-colorpicker>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
         Het is
       </mat-panel-title>
     </mat-expansion-panel-header>
